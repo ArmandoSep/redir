@@ -1,15 +1,15 @@
-import { NowRequest, NowResponse } from 'node_modules/@vercel/node';
-import axios from 'node_modules/axios';
+const { NowRequest, NowResponse } = require('@vercel/node');
+const axios = require('axios');
 
-export default async (req: NowRequest, res: NowResponse) => {
+module.exports = async (req, res) => {
     try {
         // Extract the page name from the URL path
         const pageName = req.url.replace(/^\//, '');
         // If there's a page name, perform the API request and redirect
         if (pageName) {
             // Make a POST API request (replace with your actual API endpoint)
-            const apiResponse = await axios.post(`https://gnetia18l1.execute-api.us-east-1.amazonaws.com/default/GOF_redir`, {
-            pageName: pageName,
+            const apiResponse = await axios.post('https://gnetia18l1.execute-api.us-east-1.amazonaws.com/default/GOF_redir', {
+                pageName: pageName,
             });
 
             // Redirect to the response page with the API data
@@ -25,6 +25,3 @@ export default async (req: NowRequest, res: NowResponse) => {
         res.status(500).send('An error occurred');
     }
 };
-
-
-
