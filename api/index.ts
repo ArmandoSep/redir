@@ -1,5 +1,5 @@
-import { NowRequest, NowResponse } from '@vercel/node';
-import axios from 'axios';
+import { NowRequest, NowResponse } from 'api/node_modules/@vercel/node';
+import axios from 'api/node_modules/axios';
 
 export default async (req: NowRequest, res: NowResponse) => {
     try {
