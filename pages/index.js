@@ -1,5 +1,5 @@
-import { NowRequest, NowResponse } from 'api/node_modules/@vercel/node';
-import axios from 'api/node_modules/axios';
+import { NowRequest, NowResponse } from 'node_modules/@vercel/node';
+import axios from 'node_modules/axios';
 
 export default async (req: NowRequest, res: NowResponse) => {
     try {
@@ -13,7 +13,7 @@ export default async (req: NowRequest, res: NowResponse) => {
             });
 
             // Redirect to the response page with the API data
-            res.setHeader('Location', `/response/${pageName}?data=${encodeURIComponent(apiResponse.data)}`);
+            res.setHeader('Location', `https://www.getownerfinanced.com/${encodeURIComponent(apiResponse.data)}`);
             res.status(302).send('');
         } else {
             // If no page name, redirect to www.getownerfinanced.com
