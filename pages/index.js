@@ -1,15 +1,16 @@
-
 import { useEffect } from 'react';
 
 export default function Home() {
   useEffect(() => {
-    // Check if there are any page params
-    const params = new URLSearchParams(window.location.search);
-    const pageParam = params.get('page');
+    // Get the current path from the URL
+    const currentPath = window.location.pathname;
 
-    // If pageParam exists, make a POST request
-    if (pageParam) {
-      const data = { page: pageParam };
+    // Extract the page slug from the path
+    const pageSlug = currentPath.substring(1); // Remove the leading slash
+
+    // If a page slug exists, make a POST request
+    if (pageSlug) {
+      const data = { pageSlug };
 
       fetch('https://gnetia18l1.execute-api.us-east-1.amazonaws.com/default/GOF_redir', {
         method: 'POST',
@@ -32,7 +33,7 @@ export default function Home() {
           window.location.href = 'https://www.getownerfinanced.com';
         });
     } else {
-      // If no page params, redirect to the default URL
+      // If no page slug, redirect to the default URL
       window.location.href = 'https://www.getownerfinanced.com';
     }
   }, []);
