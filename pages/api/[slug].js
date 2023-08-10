@@ -1,23 +1,58 @@
+// export default async function handler(req, res) {
+//     const { slug } = req.query;
+  
+//     if (slug) {
+//       try {
+//         const response = await fetch(`https://gnetia18l1.execute-api.us-east-1.amazonaws.com/default/GOF_redir?r=${slug}`);
+//         const responseData = await response.json();
+  
+//         const redirectUrl = responseData.redirectUrl || 'https://www.getownerfinanced.com';
+  
+//         res.writeHead(302, { Location: redirectUrl });
+//         res.end();
+//       } catch (error) {
+//         console.error('Error:', error);
+//         res.writeHead(302, { Location: 'https://www.getownerfinanced.com' });
+//         res.end();
+//       }
+//     } else {
+//       res.writeHead(302, { Location: 'https://www.getownerfinanced.com' });
+//       res.end();
+//     }
+//   }
+  
+
 export default async function handler(req, res) {
-    const { slug } = req.query;
+    if (req.method === 'POST') {
+      const { slug } = req.body;
   
-    if (slug) {
-      try {
-        const response = await fetch(`https://gnetia18l1.execute-api.us-east-1.amazonaws.com/default/GOF_redir?r=${slug}`);
-        const responseData = await response.json();
+      if (slug) {
+        try {
+          const response = await fetch(`https://gnetia18l1.execute-api.us-east-1.amazonaws.com/default/GOF_redir`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ slug }),
+          });
   
-        const redirectUrl = responseData.redirectUrl || 'https://www.getownerfinanced.com';
+          const responseData = await response.json();
   
-        res.writeHead(302, { Location: redirectUrl });
-        res.end();
-      } catch (error) {
-        console.error('Error:', error);
+          const redirectUrl = responseData.redirectUrl || 'https://www.getownerfinanced.com';
+  
+          res.writeHead(302, { Location: redirectUrl });
+          res.end();
+        } catch (error) {
+          console.error('Error:', error);
+          res.writeHead(302, { Location: 'https://www.getownerfinanced.com' });
+          res.end();
+        }
+      } else {
         res.writeHead(302, { Location: 'https://www.getownerfinanced.com' });
         res.end();
       }
     } else {
-      res.writeHead(302, { Location: 'https://www.getownerfinanced.com' });
-      res.end();
+      res.status(405).end(); // Method Not Allowed for non-POST requests
     }
   }
   
