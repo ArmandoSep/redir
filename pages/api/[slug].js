@@ -23,10 +23,9 @@
   
 
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-      const { slug } = req.body;
-  
-      if (slug) {
+    const { slug } = req.query;
+
+    if (slug) {
         try {
           const response = await fetch(`https://gnetia18l1.execute-api.us-east-1.amazonaws.com/default/GOF_redir`, {
             method: 'POST',
@@ -47,12 +46,9 @@ export default async function handler(req, res) {
           res.writeHead(302, { Location: 'https://www.getownerfinanced.com' });
           res.end();
         }
-      } else {
+    } else {
         res.writeHead(302, { Location: 'https://www.getownerfinanced.com' });
         res.end();
-      }
-    } else {
-      res.status(405).end(); // Method Not Allowed for non-POST requests
     }
-  }
+}
   
